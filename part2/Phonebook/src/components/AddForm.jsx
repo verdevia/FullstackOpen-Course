@@ -1,3 +1,5 @@
+import connect from '../services/persons'
+
 const AddForm = (props) => {
     const addContact = (event) => {
     event.preventDefault()
@@ -8,17 +10,21 @@ const AddForm = (props) => {
   const handleFormNumber = (event) => props.setNewNumber(event.target.value)
 
   const submitButton = () => {
-    if (props.newName === "" || props.newNumber === "")
-      window.alert(`Missing input!`) 
-    else if (props.persons.some((person) => person.name === props.newName))
-      window.alert(`${props.newName} is already added to phonebook!`)
-    else if (props.persons.some((person) => person.number === props.newNumber))
-      window.alert(`Number ${props.newNumber} is already in the phonebook!`)
-    else {
-      props.setPersons(props.persons.concat({name: props.newName, number: props.newNumber}))
+      const newContact = {name: props.newName, number: props.newNumber}
+      if (props.newName === "" || props.newNumber === "")
+        window.alert(`Missing input!`) 
+      else if (props.persons.some((person) => person.name === props.newName))
+        {
+        if (window.confirm(`${props.newName} is already added to phonebook! Update number?`)) {
+          const tempId = props.persons.find(person => person.name === props.newName)?.id
+          connect.put({id: tempId, number: props.newNumber, name: props.newName})
+          .then(() => props.setPersons(props.persons.map(person => person.id === tempId ? { ...person, number: props.newNumber} : person)))
+        }
+        }
+      else {
+        connect.upload(newContact).then((retperson) => props.setPersons(props.persons.concat(retperson)))
+      }
     }
-}
-
     return (
       <>
         <h2>Add a new</h2>

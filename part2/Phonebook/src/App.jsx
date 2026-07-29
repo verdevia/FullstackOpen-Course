@@ -1,18 +1,13 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+
+import connect from './services/persons'
 
 import List from './components/List'
 import AddForm from './components/AddForm'
 
 const App = () => {
   useEffect(() => {
-    console.log('JSON Effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
-      })
+    connect.get().then((persons) => setPersons(persons))
   }, [])
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
@@ -23,7 +18,7 @@ const App = () => {
     <>
       <h2>Phonebook</h2>
       <AddForm newName={newName} setNewName={setNewName} newNumber={newNumber} setNewNumber={setNewNumber} persons={persons} setPersons={setPersons}/>
-      <List persons={persons} search={search} setSearch={setSearch}/>
+      <List persons={persons} setPersons={setPersons} search={search} setSearch={setSearch}/>
     </>
   )
 }
