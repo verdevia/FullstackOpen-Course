@@ -1,4 +1,5 @@
 import connect from '../services/persons'
+import Notification from './Notification'
 
 const AddForm = (props) => {
     const addContact = (event) => {
@@ -17,17 +18,32 @@ const AddForm = (props) => {
         {
         if (window.confirm(`${props.newName} is already added to phonebook! Update number?`)) {
           const tempId = props.persons.find(person => person.name === props.newName)?.id
+          const tempPerson = (props.persons.find((person) => person.id === tempId))
           connect.put({id: tempId, number: props.newNumber, name: props.newName})
-          .then(() => props.setPersons(props.persons.map(person => person.id === tempId ? { ...person, number: props.newNumber} : person)))
+          .then(() => {
+            props.setPersons(props.persons.map(person => person.id === tempId ? { ...person, number: props.newNumber} : person))
+            props.setMessage({name:`Contact "${tempPerson.name}" was updated!`, class:'successful'})
+            props.setNewName('')
+            props.setNewNumber('')
+          })
+          .catch(error => {
+            props.setMessage({name:`Contact ${tempPerson.name} has already been removed from server!`, class:'failed'})
+          })
         }
         }
       else {
-        connect.upload(newContact).then((retperson) => props.setPersons(props.persons.concat(retperson)))
+        connect.upload(newContact).then((retperson) => {
+          props.setPersons(props.persons.concat(retperson))
+          props.setMessage({name:`Contact "${retperson.name}" was added to the phonebook!`, class:'successful'})
+          props.setNewName('')
+          props.setNewNumber('')
+        })
       }
     }
     return (
       <>
         <h2>Add a new</h2>
+        <Notification message={props.message} setMessage={props.setMessage} />
         <form onSubmit={addContact}>
         <div>
         Name: <input value={props.newName} onChange={handleFormName}/>

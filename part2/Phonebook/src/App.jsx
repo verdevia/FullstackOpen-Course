@@ -13,11 +13,12 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [search, setSearch] = useState('')
+  const [message, setMessage] = useState({name: '', class: ''})
 
   return (
     <>
       <h2>Phonebook</h2>
-      <AddForm newName={newName} setNewName={setNewName} newNumber={newNumber} setNewNumber={setNewNumber} persons={persons} setPersons={setPersons}/>
+      <AddForm newName={newName} setNewName={setNewName} newNumber={newNumber} setNewNumber={setNewNumber} persons={persons} setPersons={setPersons} message={message} setMessage={setMessage}/>
       <List persons={persons} setPersons={setPersons} search={search} setSearch={setSearch}/>
     </>
   )
