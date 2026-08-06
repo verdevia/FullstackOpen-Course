@@ -1,0 +1,22 @@
+body {
+    background-color: #00000069;
+    padding: 20px;
+}
+
+main {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+input {
+    min-width: 150px;
+    max-width: 70%;
+    field-sizing: content;
+}
+
+img {
+    background-color: #0000002c;
+    border-radius: 15px;
+}
+
