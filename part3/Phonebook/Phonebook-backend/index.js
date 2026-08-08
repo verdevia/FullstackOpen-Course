@@ -3,8 +3,10 @@ const app = express()
 const morgan = require('morgan')
 const cors = require('cors')
 
+
 app.use(cors())
 app.use(express.json())
+app.use(express.static('dist'))
 
 morgan.token('tiny-info', function (req, res) { return JSON.stringify(req.body) })
 
@@ -82,5 +84,6 @@ app.get('/info', (request, response) => {
 })
 
 const PORT = process.env.PORT || 3001
-
-module.exports = app
+app.listen(PORT, () => {
+    console.log(`Server is running on port: ${PORT}`)
+})
