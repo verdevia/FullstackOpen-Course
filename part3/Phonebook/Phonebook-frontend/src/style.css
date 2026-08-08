@@ -1,0 +1,15 @@
+.successful {
+    background-color: greenyellow;
+    max-width: fit-content;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.failed {
+    background-color: rgb(255, 47, 47);
+    max-width: fit-content;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}

@@ -1,8 +1,12 @@
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
+const cors = require('cors')
 
+
+app.use(cors())
 app.use(express.json())
+app.use(express.static('dist'))
 
 morgan.token('tiny-info', function (req, res) { return JSON.stringify(req.body) })
 
@@ -57,7 +61,7 @@ app.post('/api/persons', (request, response) => {
             persons = [...persons, person]
             console.log("added ", person)
             response.status(200)
-            response.json(persons)
+            response.json(person)
         }
         
     }
