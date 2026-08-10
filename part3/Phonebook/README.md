@@ -1,0 +1,1 @@
+Link to the hosted app: https://fullstackopen-course-2a3g.onrender.com/
